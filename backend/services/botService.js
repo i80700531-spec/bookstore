@@ -222,10 +222,12 @@ export function initBot() {
       return bot.sendMessage(chatId, `✅ *${text}*!\n\nШаг 2/3: *Номер телефона*:\n_(+79991234567)_`, { parse_mode: 'Markdown' });
     }
     if (session.step === 'ask_phone') {
-      if (!/^[\+\d][\d\s\-]{6,14}$/.test(text.trim())) {
-        return bot.sendMessage(chatId, '❌ Неверный формат. Попробуйте: +79991234567', { parse_mode: 'Markdown' });
+      const phone = text.trim();
+      // Yaxshiroq regex: kamida 7 ta raqam, probel, plyus va minusga ruxsat
+      if (!/^[\d\+\-\s]{7,20}$/.test(phone)) {
+        return bot.sendMessage(chatId, '❌ Неверный формат. Попробуйте: +998901234567', { parse_mode: 'Markdown' });
       }
-      session.order.phone = text.trim();
+      session.order.phone = phone;
       session.step = 'ask_delivery';
       return bot.sendMessage(chatId, 'Шаг 3/3: *Способ получения*:', {
         parse_mode: 'Markdown',
