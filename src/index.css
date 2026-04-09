@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-headline: "Noto Serif", serif;
+  --font-body: "Manrope", sans-serif;
+  --font-label: "Manrope", sans-serif;
+
+  --color-surface: #fbf9f4;
+  --color-primary: #041920;
+  --color-primary-container: #1a2e35;
+  --color-on-primary: #ffffff;
+  --color-secondary: #76593e;
+  --color-secondary-container: #fdd6b4;
+  --color-on-secondary-container: #785b40;
+  --color-surface-container-low: #f5f3ee;
+  --color-surface-container-high: #eae8e3;
+  --color-surface-container-highest: #e4e2dd;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-surface: #1b1c19;
+  --color-on-surface-variant: #42484a;
+  --color-error: #ba1a1a;
+  --color-outline-variant: #c2c7ca;
+
+  --radius-md: 0.75rem;
+  --radius-xl: 1.5rem;
+}
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body;
+  }
+}
+
+.editorial-shadow {
+  box-shadow: 0 8px 24px rgba(27, 28, 25, 0.06);
+}
+
+.ink-bleed-btn {
+  background: linear-gradient(45deg, #041920, #1a2e35);
+}
+
+.vellum-overlay {
+  @apply bg-surface/85 backdrop-blur-md;
+}
