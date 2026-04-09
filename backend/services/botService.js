@@ -132,11 +132,15 @@ export function initBot() {
     }
 
     if (data_cb === 'delivery_courier') {
+      const session = getSession(chatId);
+      if (!session.order.name) return bot.sendMessage(chatId, '❌ Сессия истекла. Пожалуйста, оформите заказ заново.', mainMenu);
       session.order.delivery = 'courier';
       session.step = 'ask_address';
       bot.sendMessage(chatId, '🚚 Шаг 3/3: *Адрес доставки*:', { parse_mode: 'Markdown' });
     }
     if (data_cb === 'delivery_pickup') {
+      const session = getSession(chatId);
+      if (!session.order.name) return bot.sendMessage(chatId, '❌ Сессия истекла. Пожалуйста, оформите заказ заново.', mainMenu);
       session.order.delivery = 'pickup';
       session.order.address = 'г. Москва, ул. Книжная, 10';
       finishBotOrder(chatId, session);
@@ -249,6 +253,10 @@ export function initBot() {
     const db = await getDB();
     const cart = session.cart;
     const order_info = session.order;
+
+    if (!order_info.name || cart.length === 0) {
+      return bot.sendMessage(chatId, '❌ Ошибка: Данные заказа утеряны. Пожалуйста, начните сначала.', mainMenu);
+    }
     const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
     const trackNumber = Math.random().toString().slice(2, 15);
 
